@@ -1,4 +1,5 @@
 import { Component } from "react";//import when using class
+import { Link } from "react-router-dom";
 // Statefull Component(Class)
 export class Login extends Component {
   constructor() {
@@ -50,6 +51,9 @@ export class Login extends Component {
               id="exampleInputPassword1"
               onChange={this.handlePass}
             />
+          </div>
+          <div className="mb-3">
+            <Link to="/signup">New User? SignUp Here</Link>
           </div>
           <label className="errorMessage">{this.state.errorMessage}</label>
           <button type="submit" class="btn btn-primary" onClick={this.login}>

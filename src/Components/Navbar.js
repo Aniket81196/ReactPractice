@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 let navItem1="Page1";
 export function Navbar() {
   var [title, setTitle] = useState("Cake Gallery");
@@ -7,11 +8,12 @@ export function Navbar() {
     var value = document.getElementById("search").value;
     setTitle(value);
   }
+  // Below we can <Link> is used which is a component present in react-router-dom which is used to navigate to particular URL specified in "to" attribute, so basically on click over the element within <Link> we will be navigated to URL present in "to"
   return (
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">
+      <Link to="/" class="navbar-brand" href="#"> 
         {title}
-      </a>
+      </Link>
       <button
         class="navbar-toggler"
         type="button"
@@ -74,12 +76,19 @@ export function Navbar() {
             id="search"
           />
           <button
-            class="btn btn-outline-success my-2 my-sm-0"
-            type="submit"
-            onClick={demo}
-          >
-            Search
+              class="btn btn-outline-success my-2 my-sm-0"
+              type="submit"
+              onClick={demo}
+            >
+              Search
           </button>
+          <Link to="/login">
+          <button
+              class="btn btn-outline-danger my-2 my-sm-0 ml-2"
+            >
+              Login
+          </button>
+          </Link>
         </form>
       </div>
     </nav>
