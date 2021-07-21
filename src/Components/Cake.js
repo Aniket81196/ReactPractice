@@ -1,6 +1,9 @@
 export function Cake(prop) {
+  function showDetails(){
+    prop.history.push(`/cake/${prop.data.id}`);
+  }
   return (
-    <div class="card col-3 p-0" style={{width: "18rem;"}}>
+    <div class="card col-3 p-0" style={{width: "18rem;"}} onClick={showDetails}>
       <img src={prop.data.image} class="card-img-top" alt="..." style={{width: "100%",height:"18rem"}}/>
       <div class="card-body">
         <h5 class="card-title text-center">{prop.data.name}</h5>

@@ -17,6 +17,9 @@ export class Login extends Component {
         name: "Aniket Chavan",
         errorMessage: "Enter all the details"
     })
+    if(this.user.email=="aniket8@neosoft.com" && this.user.password=="test"){
+      this.props.history.push("/");
+    }
   };
   handleEmail = (e) => {
     this.user.email = e.target.value;

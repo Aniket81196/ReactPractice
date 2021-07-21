@@ -1,12 +1,22 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 let navItem1="Page1";
-export function Navbar() {
-  var [title, setTitle] = useState("Cake Gallery");
-  function demo(event) {
-    event.preventDefault();
-    var value = document.getElementById("search").value;
-    setTitle(value);
+function Navbar(props) {
+  var [title, setTitle] = useState("Cake Galaxy");
+  // function demo(event) {
+  //   event.preventDefault();
+  //   var value = document.getElementById("search").value;
+  //   setTitle(value);
+  // }
+  var [searchText, setSearchText]=useState(undefined);
+  function search(ev){
+    ev.preventDefault();
+    if(searchText){
+      props.history.push(`/search?q=${searchText}`);
+    }
+  } 
+  function getSearchText(ev){
+    setSearchText(ev.target.value);
   }
   // Below we can <Link> is used which is a component present in react-router-dom which is used to navigate to particular URL specified in "to" attribute, so basically on click over the element within <Link> we will be navigated to URL present in "to"
   return (
@@ -68,20 +78,27 @@ export function Navbar() {
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-          <input
+          <input onChange={getSearchText}
             class="form-control mr-sm-2"
             type="search"
             placeholder="Search"
             aria-label="Search"
             id="search"
           />
-          <button
+            <button
+                onClick={search}
+                class="btn btn-outline-success my-2 my-sm-0"
+                type="submit"
+              >
+                Search
+            </button>
+          {/* <button
               class="btn btn-outline-success my-2 my-sm-0"
               type="submit"
               onClick={demo}
             >
               Search
-          </button>
+          </button> */}
           <Link to="/login">
           <button
               class="btn btn-outline-danger my-2 my-sm-0 ml-2"
@@ -94,4 +111,4 @@ export function Navbar() {
     </nav>
   );
 }
-// export default Navbar;
+export default withRouter(Navbar);
