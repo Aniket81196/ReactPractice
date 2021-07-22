@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Component } from "react";//import when using class
 import { Link } from "react-router-dom";
 // Statefull Component(Class)
@@ -17,9 +18,20 @@ export class Login extends Component {
         name: "Aniket Chavan",
         errorMessage: "Enter all the details"
     })
-    if(this.user.email=="aniket8@neosoft.com" && this.user.password=="test"){
-      this.props.history.push("/");
-    }
+    // if(this.user.email=="aniket8@neosoft.com" && this.user.password=="test"){
+         // this.props.history.push("/");
+    // }
+    let apiurl= "https://apifromashu.herokuapp.com/api/login"
+        axios({
+          method: "post",
+          url: apiurl,
+          data: this.user
+        }).then((response)=>{
+          console.log("response from login api", response);
+        },(error)=>{
+          console.log("response from login api", error);
+        })
+        e.preventDefault();
   };
   handleEmail = (e) => {
     this.user.email = e.target.value;

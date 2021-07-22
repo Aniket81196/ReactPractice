@@ -24,7 +24,7 @@ function App() {
           <Route exact path="/login" component={Login}></Route>
           <Route exact path="/signup" component={SignUp}></Route>
           <Route exact path="/search" component={Search}></Route>
-          <Route exact path="/cake/:parametername" component={CakeDetails}></Route> 
+          <Route exact path="/cake/:details" component={CakeDetails}></Route> 
           <Route exact path="**" component={PageNotFound}></Route>
         </Switch>
       </BrowserRouter>

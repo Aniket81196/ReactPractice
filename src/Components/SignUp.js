@@ -1,5 +1,6 @@
 import { Component } from "react";//import when using class
 import Loader from "react-loader-spinner";
+import axios from "axios";
 // Statefull Component(Class)
 export class SignUp extends Component {
   constructor() {
@@ -23,6 +24,17 @@ export class SignUp extends Component {
             errorMessage: "Enter all the details",
             loading: false
         })
+        let apiurl= "https://apifromashu.herokuapp.com/api/register"
+        axios({
+          method: "post",
+          url: apiurl,
+          data: this.user
+        }).then((response)=>{
+          console.log("response from signup api", response);
+        },(error)=>{
+          console.log("response from signup api", error);
+        })
+        e.preventDefault();
     },5000);
   };
   handleName = (e) => {
@@ -34,6 +46,7 @@ export class SignUp extends Component {
   handlePass = (e) => {
     this.user.password = e.target.value;
   };
+  
   render() {
     let loader;
       if(this.state.loading){
