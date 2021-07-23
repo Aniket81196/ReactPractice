@@ -99,13 +99,26 @@ function Navbar(props) {
             >
               Search
           </button> */}
-          <Link to="/login">
+          {props.isUserLoggedIn == false && <Link to="/login">
           <button
               class="btn btn-outline-danger my-2 my-sm-0 ml-2"
             >
               Login
           </button>
-          </Link>
+          </Link>}
+          {props.isUserLoggedIn == true && <Link to="/">
+          <button
+              class="btn btn-outline-danger my-2 my-sm-0 ml-2"
+            >
+              Logout
+          </button>
+          <button
+              class="btn btn-outline-warning my-2 my-sm-0 ml-2"
+            >
+              Cart
+          </button>
+          </Link>}
+
         </form>
       </div>
     </nav>

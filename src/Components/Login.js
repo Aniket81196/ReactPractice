@@ -1,14 +1,16 @@
 import axios from "axios";
 import { Component } from "react";//import when using class
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 // Statefull Component(Class)
-export class Login extends Component {
-  constructor() {
+class Login extends Component {
+  constructor(props) {
     super();
     // Initializing the State
     this.state = {
         name: "Aniket"
     };
+    console.log(props);
   }
   user = {};
   login = (e) => {//here we convert normal function to arrow function because we using class so we need to bind this function with the event below
@@ -28,6 +30,15 @@ export class Login extends Component {
           data: this.user
         }).then((response)=>{
           console.log("response from login api", response);
+          if(response.data.token){
+            this.props.loggedin();
+            console.log(this.props);
+            // localStorage.token=response.data.token;
+            this.props.history.push("/");
+          }
+          else{
+            alert("Invalid credentials");
+          }
         },(error)=>{
           console.log("response from login api", error);
         })
@@ -79,6 +90,7 @@ export class Login extends Component {
     );
   }
 }
+export default withRouter(Login);
 
 // Stateless Component(Function)
 // export function Login(){
