@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Navbar from "./Components/Navbar"; //For export default components we donot use {} 
 import {Carousel} from "./Components/Carousel";
-import {Cake} from "./Components/Cake";
+import Cake from "./Components/Cake";
 import Login from './Components/Login';
 import {SignUp} from './Components/SignUp';
 import {CakeDetails} from './Components/CakeDetails';
