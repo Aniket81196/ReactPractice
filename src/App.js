@@ -11,12 +11,43 @@ import {PageNotFound} from './Components/PageNotFound';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { Search } from './Components/Search';
 import { useState } from 'react';
+import {Redirect} from "react-router-dom";
 
 function App() {
-  let [isUserLoggedIn, setUserLogin]= useState(false);
-  // let [isUserLoggedIn, setUserLogin]= useState(localStorage.token?true:false);
-  function loggedin(){
-    setUserLogin(true);
+  let isUserLoggedIn=localStorage.token?true:false;
+  let route;
+  if(isUserLoggedIn){
+    console.log("Login", isUserLoggedIn)
+    route=(
+     <Switch>
+        <Route exact path="/" component={Home}></Route>
+        <Route path='/login' render={() => 
+          (
+            <Redirect to="/"/>
+          )
+        }/>
+        <Route path='/signup' render={() => 
+          (
+            <Redirect to="/"/>
+          )
+        }/>
+        <Route exact path="/search" component={Search}></Route>
+        <Route exact path="/cake/:details" component={CakeDetails}></Route> 
+        <Route exact path="**" component={PageNotFound}></Route>
+     </Switch>
+    );
+  }
+  else{
+    route=(
+      <Switch>
+        <Route exact path="/" component={Home}></Route>
+        <Route exact path="/login"><Login/></Route>
+        <Route exact path="/signup" component={SignUp}></Route>
+        <Route exact path="/search" component={Search}></Route>
+        <Route exact path="/cake/:details" component={CakeDetails}></Route> 
+        <Route exact path="**" component={PageNotFound}></Route>
+      </Switch>
+    );
   }
   return (
     // Below <Navbar> component will be common in all the <Route>
@@ -25,25 +56,17 @@ function App() {
     <div style={{height:"100%"}}>
       <BrowserRouter>
         <Navbar isUserLoggedIn={isUserLoggedIn}></Navbar>  
-        <Switch>
+        {/* <Switch>
           <Route exact path="/" component={Home}></Route>
-          <Route exact path="/login"><Login loggedin={loggedin}/></Route>
+          <Route exact path="/login"><Login/></Route>
           <Route exact path="/signup" component={SignUp}></Route>
           <Route exact path="/search" component={Search}></Route>
           <Route exact path="/cake/:details" component={CakeDetails}></Route> 
           <Route exact path="**" component={PageNotFound}></Route>
-        </Switch>
+        </Switch> */}
+        {route}
+        {console.log("hello", route)}
       </BrowserRouter>
-      {/* <Navbar></Navbar>
-      <SignUp></SignUp>
-      <Carousel></Carousel>
-      <div className="row ml-0 mr-0 mt-5 d-flex justify-content-around">
-        <Cake data={cake1}></Cake>
-        <Cake data={cake2}></Cake>
-        <Cake data={cake3}></Cake>
-      </div>
-      <Login></Login>
-      <CakeDetails></CakeDetails> */}
     </div>
   );
 }

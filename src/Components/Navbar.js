@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 let navItem1="Page1";
 function Navbar(props) {
@@ -17,6 +18,10 @@ function Navbar(props) {
   } 
   function getSearchText(ev){
     setSearchText(ev.target.value);
+  }
+  function logout(){
+    localStorage.clear();
+    window.location.reload();
   }
   // Below we can <Link> is used which is a component present in react-router-dom which is used to navigate to particular URL specified in "to" attribute, so basically on click over the element within <Link> we will be navigated to URL present in "to"
   return (
@@ -76,6 +81,9 @@ function Navbar(props) {
               </a>
             </div>
           </li>
+          {props.name && <li className="navbar-brand">
+          Welcome {props.name}
+          </li>}
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <input onChange={getSearchText}
@@ -108,7 +116,7 @@ function Navbar(props) {
           </Link>}
           {props.isUserLoggedIn == true && <Link to="/">
           <button
-              class="btn btn-outline-danger my-2 my-sm-0 ml-2"
+              class="btn btn-outline-danger my-2 my-sm-0 ml-2" onClick={logout}
             >
               Logout
           </button>
@@ -124,4 +132,12 @@ function Navbar(props) {
     </nav>
   );
 }
-export default withRouter(Navbar);
+// export default withRouter(Navbar);
+Navbar= withRouter(Navbar)
+export default connect(function(state, props){
+  console.log("Store State", state)
+  return { 
+    isUserLoggedIn: state["AuthReducer"]["isUserLoggedIn"], //this state object is state of store which contains AuthReducer function object and this function object contains isUserLoggedIn, and then value fetched is stored in isUserLoggedIn prop of Navbar component, same goes for below name.
+    name: state["AuthReducer"]["user"] && state["AuthReducer"]["user"]["name"]
+  }
+})(Navbar) 

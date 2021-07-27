@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import "./reduxstore/store";
+import {Provider} from "react-redux";
+import myStore from "./reduxstore/store";
 
-
+//SInce below we have passed store as prop to App Component, now prop object contains all methods present in store like dispatch(), getState() etc, which now cann be accessed by all the components within App Component
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={myStore}> 
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 // If you want to start measuring performance in your app, pass a function

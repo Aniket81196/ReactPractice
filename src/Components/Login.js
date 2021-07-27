@@ -2,6 +2,7 @@ import axios from "axios";
 import { Component } from "react";//import when using class
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import { connect } from "react-redux";
 // Statefull Component(Class)
 class Login extends Component {
   constructor(props) {
@@ -31,9 +32,13 @@ class Login extends Component {
         }).then((response)=>{
           console.log("response from login api", response);
           if(response.data.token){
-            this.props.loggedin();
+            // this.props.loggedin();
+            this.props.dispatch({
+              type: "LOGIN",
+              payload: response.data
+            })
             console.log(this.props);
-            // localStorage.token=response.data.token;
+            localStorage.token=response.data.token;
             this.props.history.push("/");
           }
           else{
@@ -90,7 +95,9 @@ class Login extends Component {
     );
   }
 }
-export default withRouter(Login);
+// export default withRouter(Login);
+Login=withRouter(Login);
+export default connect()(Login); //connecting Login Component with store
 
 // Stateless Component(Function)
 // export function Login(){
