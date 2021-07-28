@@ -84,6 +84,7 @@ class Login extends Component {
             />
           </div>
           <div className="mb-3">
+            {console.log("signUp",this.props) }
             <Link to="/signup">New User? SignUp Here</Link>
           </div>
           <label className="errorMessage">{this.state.errorMessage}</label>

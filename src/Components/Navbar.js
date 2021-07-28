@@ -19,9 +19,20 @@ function Navbar(props) {
   function getSearchText(ev){
     setSearchText(ev.target.value);
   }
-  function logout(){
+  function logout(e){
+    e.preventDefault();
+    props.history.push("/")
     localStorage.clear();
     window.location.reload();
+    console.log("Logout",props)
+    
+  }
+  function cart(e){
+    e.preventDefault()
+    props.history.push("/cart")
+  }
+  function formSub(e){
+    e.preventDefault();
   }
   // Below we can <Link> is used which is a component present in react-router-dom which is used to navigate to particular URL specified in "to" attribute, so basically on click over the element within <Link> we will be navigated to URL present in "to"
   return (
@@ -85,7 +96,7 @@ function Navbar(props) {
           Welcome {props.name}
           </li>}
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <form class="form-inline my-2 my-lg-0" onSubmit={formSub}>
           <input onChange={getSearchText}
             class="form-control mr-sm-2"
             type="search"
@@ -107,26 +118,26 @@ function Navbar(props) {
             >
               Search
           </button> */}
-          {props.isUserLoggedIn == false && <Link to="/login">
+          {!props.isUserLoggedIn && <Link to="/login">
           <button
-              class="btn btn-outline-danger my-2 my-sm-0 ml-2"
+            class="btn btn-outline-danger my-2 my-sm-0 ml-2"
             >
               Login
           </button>
           </Link>}
-          {props.isUserLoggedIn == true && <Link to="/">
+          {props.isUserLoggedIn &&
           <button
-              class="btn btn-outline-danger my-2 my-sm-0 ml-2" onClick={logout}
+             class="btn btn-outline-danger my-2 my-sm-0 ml-2" onClick={logout}
             >
               Logout
-          </button>
-          <button
-              class="btn btn-outline-warning my-2 my-sm-0 ml-2"
+          </button>}
+          {console.log("Navbar", props)}
+          {props.isUserLoggedIn &&
+            <button
+              class="btn btn-outline-warning my-2 my-sm-0 ml-2" onClick={cart}
             >
               Cart
-          </button>
-          </Link>}
-
+          </button>}
         </form>
       </div>
     </nav>
