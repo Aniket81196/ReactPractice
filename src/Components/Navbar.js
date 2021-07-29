@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
-let navItem1="Page1";
+// let navItem1="Page1";
 function Navbar(props) {
   var [title, setTitle] = useState("Cake Galaxy");
   // function demo(event) {
@@ -25,7 +25,6 @@ function Navbar(props) {
     localStorage.clear();
     window.location.reload();
     console.log("Logout",props)
-    
   }
   function cart(e){
     e.preventDefault()
@@ -53,7 +52,7 @@ function Navbar(props) {
       </button>
       <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
         <ul class="navbar-nav">
-          <li class="nav-item active">
+          {/* <li class="nav-item active">
             <a class="nav-link" href="#">
               {navItem1} <span class="sr-only">(current)</span>
             </a>
@@ -91,7 +90,7 @@ function Navbar(props) {
                 Something else here
               </a>
             </div>
-          </li>
+          </li> */}
           {props.name && <li className="navbar-brand">
           Welcome {props.name}
           </li>}

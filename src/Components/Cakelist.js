@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Cake from './Cake'; 
+import Loader from "react-loader-spinner";
 // let cake1={
 //     id: 123,
 //     name: "Choc1",
@@ -19,7 +20,16 @@ import Cake from './Cake';
 //     price: 400,
 //     image: "cake3.jfif"
 //   }
+
+
 export function Cakelist(props){ //this component has access to props because it is a child of <Home> component who has access to props object, even though this <Cakelist> component is not present in <Route> in App.js as <Home> is, but still it has access to props object due to reason mentioned earlier on same line
+  let loader2Style={display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%"}
+  let [loader2, setLoader2]=useState(true);
+  useEffect(()=>{
+    setTimeout(()=>{
+      setLoader2(false)
+    },1000)
+  })
   let [cakes, setCakes]=useState([]);
   useEffect(()=>{
     let apiurl= "https://apifromashu.herokuapp.com/api/allcakes";
@@ -38,9 +48,17 @@ export function Cakelist(props){ //this component has access to props because it
             {/* <Cake data={cake1} history={props.history}></Cake>
             <Cake data={cake2} history={props.history}></Cake>
             <Cake data={cake3} history={props.history}></Cake> */}
-            {cakes.map((each, index)=>{
-              return <Cake key={index} data={each}/>
-            })}
+            {loader2?(
+               <Loader
+               style={loader2Style}
+                 type="Rings"
+                 color="black"
+               />
+            ):(
+              cakes.map((each, index)=>{
+                return <Cake key={index} data={each}/>
+              })
+            )}
         </div>
     );
 }

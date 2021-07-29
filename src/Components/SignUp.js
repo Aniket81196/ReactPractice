@@ -1,13 +1,15 @@
 import { Component } from "react";//import when using class
 import Loader from "react-loader-spinner";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // Statefull Component(Class)
 export class SignUp extends Component {
   constructor() {
     super();
     // Initializing the State
     this.state = {
-        name: "Aniket",
+        // name: "Aniket",
         loading: false
     };
   }
@@ -16,14 +18,14 @@ export class SignUp extends Component {
     e.preventDefault();
     // Updating the State
     this.setState({
-        name: "Aniket Chavan",
+        // name: "Aniket Chavan",
         loading: true
     })
     setTimeout(()=>{
-        this.setState({
-            errorMessage: "Enter all the details",
-            loading: false
-        })
+        // this.setState({
+        //     // errorMessage: "Enter all the details",
+        //     loading: false
+        // })
         let apiurl= "https://apifromashu.herokuapp.com/api/register"
         axios({
           method: "post",
@@ -31,11 +33,27 @@ export class SignUp extends Component {
           data: this.user
         }).then((response)=>{
           console.log("response from signup api", response);
+          this.setState({
+            loading: false
+          })
+          toast.success('SignedUp Successfully. Verification Email sent on registered Id', {
+            position: "top-right",
+            autoClose: 10000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         },(error)=>{
+          this.setState({
+            errorMessage: "Enter all the details",
+            loading: false
+          })
           console.log("response from signup api", error);
         })
         e.preventDefault();
-    },5000);
+    },2000);
   };
   handleName = (e) => {
     this.user.name = e.target.value;
@@ -62,8 +80,8 @@ export class SignUp extends Component {
       }
    
     return (
-      <div className="mt-5" style={{ width: "80%", margin: "auto" }}>
-        <h1 className="text-center">{this.state.name}</h1>
+      <div className="mt-5" style={{ width: "50%", margin: "auto",  border: "0.01rem solid black", borderRadius: "0.8rem", padding: "2rem" }}>
+        {/* <h1 className="text-center">{this.state.name}</h1> */}
         <h1 className="text-center">SignUp Here</h1>
         {loader}
         <form>
@@ -74,9 +92,6 @@ export class SignUp extends Component {
               class="form-control"
               onChange={this.handleName}
             />
-            <small id="emailHelp" class="form-text text-muted">
-              We'll never share your email with anyone else.
-            </small>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
@@ -105,6 +120,7 @@ export class SignUp extends Component {
             SignUp
           </button>
         </form>
+        <ToastContainer />
       </div>
     );
   }

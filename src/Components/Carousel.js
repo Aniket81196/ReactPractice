@@ -2,18 +2,21 @@ export function Carousel() {
   return (
     <div
       id="carouselExampleControls"
-      class="carousel slide mt-5"
+      class="carousel slide"
       data-ride="carousel"
     >
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img style={{height:"200px"}} src="logo192.png" class="d-block w-80 m-auto" alt="..." />
+          <img style={{height:"400px"}} src="c1.jpg" class="d-block w-50 m-auto" alt="..." />
         </div>
         <div class="carousel-item">
-          <img style={{height:"200px"}} src="logo192.png" class="d-block w-80 m-auto" alt="..." />
+          <img style={{height:"400px"}} src="c2.jpg" class="d-block w-50 m-auto" alt="..." />
         </div>
         <div class="carousel-item">
-          <img style={{height:"200px"}} src="logo192.png" class="d-block w-80 m-auto" alt="..." />
+          <img style={{height:"400px"}} src="c3.jpg" class="d-block w-50 m-auto" alt="..." />
+        </div>
+        <div class="carousel-item">
+          <img style={{height:"400px"}} src="c4.jpg" class="d-block w-50 m-auto" alt="..." />
         </div>
       </div>
       <a
