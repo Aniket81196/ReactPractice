@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
-export function CakeDetails(props) {
+import { connect } from "react-redux";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+function CakeDetails(props) {
     let loader4Style={display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%"}
     let [loader4, setLoader4]=useState(true);
     useEffect(()=>{
@@ -9,7 +12,7 @@ export function CakeDetails(props) {
         setLoader4(false)
         },500)
     })
-    let [cakeDetails, setCakeDetails]=useState([]);
+    let [cakeDetails, setCakeDetails]=useState({});
     useEffect(()=>{
         let apiurl= "https://apifromashu.herokuapp.com/api/cake/" + props.match.params.details;
         axios({
@@ -22,9 +25,46 @@ export function CakeDetails(props) {
             console.log("error from all cakes api", error);
         })
     },[])
+    var cakedata={
+                        name:cakeDetails.name,
+                        cakeid:cakeDetails.cakeid,
+                        price:cakeDetails.price,
+                        weight:cakeDetails.weight,
+                        image:cakeDetails.image
+                    }
+    function addToCart(e){
+        e.preventDefault();
+        if(props.isUserLoggedIn){
+            console.log("CD Api", props.isUserLoggedIn)
+            let addToCartUrl = "https://apifromashu.herokuapp.com/api/addcaketocart"
+            axios(
+                {
+                    method: 'post',
+                    url: addToCartUrl,
+                    headers: {
+                        authToken: localStorage.token
+                    },
+                    data: cakedata
+                }
+            ).then((response) => {
+                console.log("abcd", cakeDetails)
+                toast.success(cakeDetails.name + "Added to cart")
+                // alert("added to cart")
+                console.log("response from add to cake cart : ", response)
+                props.history.push("/cart")
+            }, (error) => {
+                alert("error while adding to cart")
+                console.log("error from cake details api : ", error)
+            })
+        } 
+        else{
+            toast.error("You need to login first")
+        }
+    }
     return (
         <div className="container">
             {console.log("Cake Details ", cakeDetails)}
+            {console.log("Cake Details Props", props)}
             {/* <h1>Hello{props.match.params.details}</h1> */}
             {loader4?(
                  <Loader
@@ -57,13 +97,21 @@ export function CakeDetails(props) {
                             <p><label className="font-weight-bold">Weight:-</label> {cakeDetails.weight}kg</p>
                             <p><label className="font-weight-bold">Flavour:-</label> {cakeDetails.flavour}</p>
                             <p><label className="font-weight-bold">Occasion:-</label> {cakeDetails.type}</p>
-                            <a href="#" class="btn btn-primary mt-5 w-50">Buy</a>
+                            <a href="#" class="btn btn-primary mt-5 w-50" onClick={addToCart}>Add To Cart</a>
                         </div>
                     </div>
                </div>
             )}
-           
+           <ToastContainer />
         </div>
     );
   }
+
+export default connect(function(state, props){
+    console.log("CD", state)
+    console.log("CD1", props)
+    return{
+        isUserLoggedIn: state["AuthReducer"]["isUserLoggedIn"]
+    }
+})(CakeDetails)
   
