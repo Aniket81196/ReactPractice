@@ -25,17 +25,25 @@ function CakeDetails(props) {
             console.log("error from all cakes api", error);
         })
     },[])
-    var cakedata={
-                        name:cakeDetails.name,
-                        cakeid:cakeDetails.cakeid,
-                        price:cakeDetails.price,
-                        weight:cakeDetails.weight,
-                        image:cakeDetails.image
-                    }
+  
     function addToCart(e){
+        var cakedata={
+            name:cakeDetails.name,
+            cakeid:cakeDetails.cakeid,
+            price:cakeDetails.price,
+            weight:cakeDetails.weight,
+            image:cakeDetails.image
+        }
         e.preventDefault();
         if(props.isUserLoggedIn){
             console.log("CD Api", props.isUserLoggedIn)
+            // props.dispatch({
+            //     type: "Add_Cart_Items"
+            // })
+            // if(props.addCart!==null){
+            //     toast.success(cakeDetails.name + "Added to cart")
+            //     props.history.push("/cart")
+            // }
             let addToCartUrl = "https://apifromashu.herokuapp.com/api/addcaketocart"
             axios(
                 {
@@ -111,7 +119,8 @@ export default connect(function(state, props){
     console.log("CD", state)
     console.log("CD1", props)
     return{
-        isUserLoggedIn: state["AuthReducer"]["isUserLoggedIn"]
+        isUserLoggedIn: state["AuthReducer"]["isUserLoggedIn"],
+        // addCart: state["AddToCartReducer"]["addcart"]
     }
 })(CakeDetails)
   

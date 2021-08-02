@@ -7,7 +7,20 @@ import "./reduxstore/store";
 import {Provider} from "react-redux";
 import myStore from "./reduxstore/store";
 import {BrowserRouter} from "react-router-dom";
+import axios from "axios"
 
+// axios.interceptors.request.use((request)=>{
+//   if(request.url.contains("/cakecart")  || request.url.contains("/addcaketocart")){
+//     request.headers["authToken"]=localStorage.token
+//     return request
+//   }
+//   else{
+//     return request
+//   }
+// })
+// axios.interceptors.response.use((response)=>{
+//   return response
+// })
 
 //SInce below we have passed store as prop to App Component, now prop object contains all methods present in store like dispatch(), getState() etc, which now cann be accessed by all the components within App Component
 ReactDOM.render(

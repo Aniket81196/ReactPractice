@@ -1,4 +1,5 @@
 export let AuthReducer= function(state={
+    isLoading: true,
     isUserLoggedIn: localStorage.token?true:false
 }, action){
     switch(action.type){
@@ -11,6 +12,54 @@ export let AuthReducer= function(state={
         default: return state;
     }
 }
+export let CartReducer= function(state={
+    dell:10
+},action){
+    switch(action.type){
+        case "CART_FETCHING":{
+           state={...state}
+           state["isLoading"]=true 
+           return state
+        }
+        case "CART_SUCCESS":{
+            state={...state}
+            state["isLoading"]=false
+            state["cartitems"]=action.payload
+            return state
+        }
+         case "CART_FAILURE":{
+            state={...state}
+            state["isLoading"]=false
+            state["carterror"]="Some error occurred in cart fetch"
+            return state
+        }
+        default: return state;
+    }
+}
+// export let AddToCartReducer= function(state={
+//     dell:11
+// },action){
+//     switch(action.type){
+//         case "ADD_CART_FETCHING":{
+//            state={...state}
+//            state["isLoading"]=true 
+//            return state
+//         }
+//         case "ADD_CART_SUCCESS":{
+//             state={...state}
+//             state["isLoading"]=false
+//             state["addcart"]=action.payload
+//             return state
+//         }
+//          case "ADD_CART_FAILURE":{
+//             state={...state}
+//             state["isLoading"]=false
+//             state["addcarterror"]="Some error occurred in cart fetch"
+//             return state
+//         }
+//         default: return state;
+//     }
+// }
 export let Reducer1= function(state={
     dell:10
 }, action){
