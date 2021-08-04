@@ -51,30 +51,49 @@ function Cart(props){
             toast.error("You need to login first")
         }
     },[])
-    
-    
     function addToCart(index,e){
+
         e.preventDefault();
-        console.log("hello", index)
-        let addToCartUrl = "https://apifromashu.herokuapp.com/api/addcaketocart"
-        axios(
-            {
-                method: 'post',
-                url: addToCartUrl,
-                headers: {
-                    authToken: localStorage.token
-                },
-                data: props.cartDetails[index]
-            }
-        ).then((response) => {
-            // alert("added to cart")
-            console.log("response from add to cake cart : ", response)
-            toast.success("Cake added to cart")
-        }, (error) => {
-            alert("error while adding to cart")
-            console.log("error from cake details api : ", error)
-        }).then(()=>{
-            props.dispatch({
+        console.log("hello", props.cartDetails[index])
+        props.dispatch({
+            type: "Cart_Item",
+            indexItem: props.cartDetails[index],
+            dispatch:  props.dispatch({
+                type: "Cart_Items"
+            })
+        })
+       
+        // let addToCartUrl = "https://apifromashu.herokuapp.com/api/addcaketocart"
+        // axios(
+        //     {
+        //         method: 'post',
+        //         url: addToCartUrl,
+        //         headers: {
+        //             authToken: localStorage.token
+        //         },
+        //         data: props.cartDetails[index]
+        //     }
+        // ).then((response) => {
+        //     // alert("added to cart")
+        //     console.log("response from add to cake cart : ", response)
+        //     toast.success("Cake added to cart")
+        // }, (error) => {
+        //     alert("error while adding to cart")
+        //     console.log("error from cake details api : ", error)
+        // }).then(()=>{
+        //     props.dispatch({
+        //         type: "Cart_Items"
+        //     })
+        // })
+    }
+    function removeMinusCart(index, e){
+        e.preventDefault();
+        console.log("hello", props.dispatch)
+        let cakeId={cakeId1:props.cartDetails[index]}
+        props.dispatch({
+            type: "Remove_One_Cart_Item",
+            indexItem: cakeId,
+            dispatch:  props.dispatch({
                 type: "Cart_Items"
             })
         })
@@ -85,6 +104,7 @@ function Cart(props){
     // }
     return(
         <>
+            {props.indexCartItem && props.addToast &&  toast.success(props.indexCartItem.name + "Added to cart")}
             {
                 loader5?(
                     <Loader
@@ -123,7 +143,7 @@ function Cart(props){
                             <td style={{verticalAlign:"middle", textAlign: "center"}}>₹{each.price}</td>
                             <td style={{verticalAlign:"middle", textAlign: "center"}}>
                                 <div class="number d-flex align-items-center">
-                                    <button class="btn btn-primary mr-2">-</button>
+                                    <button class="btn btn-primary mr-2" onClick={(e)=>{removeMinusCart(index, e)}}>-</button>
                                     <span>{each.quantity}</span>
                                     {/* <input type="text" value={each.quantity}/> */}
                                     <button class="btn btn-primary ml-2" onClick={(e)=>{addToCart(index,e)}}>+</button>
@@ -145,6 +165,8 @@ Cart =withRouter(Cart)
 export default connect(function(state,props){
     return{
         isUserLoggedIn: state["AuthReducer"]["isUserLoggedIn"],
-        cartDetails: state["CartReducer"]["cartitems"]
+        cartDetails: state["CartReducer"]["cartitems"],
+        indexCartItem: state["CartIndexItemReducer"]["indexcartitem"],
+        addToast: state["AddCakeToCartReducer"]["addToast"]
     }
 })(Cart)
