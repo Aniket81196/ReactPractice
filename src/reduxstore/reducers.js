@@ -86,9 +86,9 @@ export let CartReducer= function(state={
         default: return state;
     }
 }
-// Cart Index Item Reducer
+// Cart Index Item Reducer(plus button)
 export let CartIndexItemReducer= function(state={
-    dell:14,addToast:false
+    dell:14,addToast1:false
 },action){
     switch(action.type){
         case "CART_ITEM_FETCHING":{
@@ -100,13 +100,64 @@ export let CartIndexItemReducer= function(state={
             state={...state}
             state["isLoading"]=false
             state["indexcartitem"]=action.payload
-            state["addToast"]=true
+            state["addToast1"]=true
             return state
         }
          case "CART_ITEM_FAILURE":{
             state={...state}
             state["isLoading"]=false
             state["indexcarterror"]="Some error occurred in add cake to cart fetch"
+            return state
+        }
+        default: return state;
+    }
+}
+// Order Cake Reducer
+export let OrderCakeReducer=function(state={
+    dell: 18
+},action){
+    switch(action.type){
+        case "ORDER_CAKE_FETCHING":{
+           state={...state}
+           state["isLoading"]=true 
+           return state
+        }
+        case "ORDER_CAKE_SUCCESS":{
+            state={...state}
+            state["isLoading"]=false
+            state["ordercake"]=action.payload
+            return state
+        }
+         case "ORDER_CAKE_FAILURE":{
+            state={...state}
+            state["isLoading"]=false
+            state["ordercakeerror"]="Some error occurred in add cake to cart fetch"
+            return state
+        }
+        default: return state;
+    }
+}
+// Past Orders
+export let PastOrderReducer=function(state={
+    dell: 19
+},action){
+    switch(action.type){
+        case "PAST_ORDER_FETCHING":{
+           state={...state}
+           state["isLoading"]=true 
+           return state
+        }
+        case "PAST_ORDER_SUCCESS":{
+            console.log("pat success", action.payload)
+            state={...state}
+            state["isLoading"]=false
+            state["pastorders"]=action.payload
+            return state
+        }
+         case "PAST_ORDER_FAILURE":{
+            state={...state}
+            state["isLoading"]=false
+            state["pastorderserror"]="Some error occurred in past order fetch"
             return state
         }
         default: return state;
@@ -136,9 +187,9 @@ export let CartIndexItemReducer= function(state={
 //         default: return state;
 //     }
 // }
-// Remove One Item 
+// Remove One Item(minus button)
 export let RemoveOneCartItemReducer= function(state={
-    dell:15,addToast:false
+    dell:15,addToast2:false
 },action){
     console.log(".,.,..",action)
     switch(action.type){
@@ -153,13 +204,39 @@ export let RemoveOneCartItemReducer= function(state={
             state["isLoading"]=false
             console.log(",,,,,,,,,",action.payload)
             state["removeonecartitem"]=action.payload
-            state["addToast"]=true
+            state["addToast2"]=true
             return state
         }
          case "REMOVE_ONE_CART_ITEM_FAILURE":{
             state={...state}
             state["isLoading"]=false
             state["removeonecarterror"]="Some error occurred in remove one cake from cart fetch"
+            return state
+        }
+        default: return state;
+    }
+}
+// Remove Button Reducer
+export let RemoveButtonReducer= function(state={
+    dell:16,addToast3:false
+},action){
+    switch(action.type){
+        case "REMOVE_CART_ITEM_FETCHING":{
+           state={...state}
+           state["isLoading"]=true 
+           return state
+        }
+        case "REMOVE_CART_ITEM_SUCCESS":{
+            state={...state}
+            state["isLoading"]=false
+            state["indexcartitem"]=action.payload
+            state["addToast3"]=true
+            return state
+        }
+         case "REMOVE_CART_ITEM_FAILURE":{
+            state={...state}
+            state["isLoading"]=false
+            state["indexcarterror"]="Some error occurred in remove cake from cart fetch"
             return state
         }
         default: return state;

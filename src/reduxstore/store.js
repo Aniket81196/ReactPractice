@@ -1,9 +1,9 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {Reducer1, Reducer2, AuthReducer, CartReducer, CakeReducer, AddCakeToCartReducer, CartIndexItemReducer, RemoveOneCartItemReducer} from "./reducers";
+import {Reducer1, Reducer2, AuthReducer, CartReducer, CakeReducer, AddCakeToCartReducer, CartIndexItemReducer, RemoveOneCartItemReducer, RemoveButtonReducer, OrderCakeReducer, PastOrderReducer} from "./reducers";
 import RootSaga from "./sagas"
 import createSaga from "redux-saga";
 let sagaMiddleware=createSaga();
-let reducers= combineReducers({Reducer1, Reducer2, AuthReducer, CartReducer, CakeReducer, AddCakeToCartReducer, CartIndexItemReducer, RemoveOneCartItemReducer});
+let reducers= combineReducers({Reducer1, Reducer2, AuthReducer, CartReducer, CakeReducer, AddCakeToCartReducer, CartIndexItemReducer, RemoveOneCartItemReducer, RemoveButtonReducer, OrderCakeReducer, PastOrderReducer});
 let store= createStore(reducers, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(RootSaga)
 export default store;

@@ -33,6 +33,15 @@ function Navbar(props) {
   function formSub(e){
     e.preventDefault();
   }
+  function pastOrders(e){
+    e.preventDefault();
+    if(props.isUserLoggedIn){
+      props.dispatch({
+        type: "Cake_History"
+      })
+      props.history.push("/pastorders")
+    }
+  }
   // Below we can <Link> is used which is a component present in react-router-dom which is used to navigate to particular URL specified in "to" attribute, so basically on click over the element within <Link> we will be navigated to URL present in "to"
   return (
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -136,6 +145,12 @@ function Navbar(props) {
               class="btn btn-outline-warning my-2 my-sm-0 ml-2" onClick={cart}
             >
               Cart
+          </button>}
+          {props.isUserLoggedIn &&
+            <button
+              class="btn btn-outline-primary my-2 my-sm-0 ml-2" onClick={pastOrders}
+            >
+              View Past Orders
           </button>}
         </form>
       </div>

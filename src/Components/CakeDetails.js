@@ -10,7 +10,7 @@ function CakeDetails(props) {
     useEffect(()=>{
         setTimeout(()=>{
         setLoader4(false)
-        },500)
+        },1000)
     })
     // let [cakeDetails, setCakeDetails]=useState({});
     useEffect(()=>{
@@ -83,12 +83,13 @@ function CakeDetails(props) {
             toast.error("You need to login first")
         }
     }
+    function navigate(){
+        toast.success("Cake added to cart")
+        props.history.push("/cart")
+    }
     return (
         <div className="container">
             {console.log("Cake Details Props", props)}
-            {props.addToast &&  toast.success(props.addCakeToCartItem.name + "Added to cart")}
-            {props.addToast &&  props.history.push("/cart")}
-            {/* <h1>Hello{props.match.params.details}</h1> */}
             {loader4?(
                  <Loader
                  style={loader4Style}
@@ -120,7 +121,7 @@ function CakeDetails(props) {
                             <p><label className="font-weight-bold">Weight:-</label> {props.cakeitem.weight}kg</p>
                             <p><label className="font-weight-bold">Flavour:-</label> {props.cakeitem.flavour}</p>
                             <p><label className="font-weight-bold">Occasion:-</label> {props.cakeitem.type}</p>
-                            <a href="#" class="btn btn-primary mt-5 w-50" onClick={addToCart}>Add To Cart</a>
+                            <a href="#" class="btn btn-primary mt-5 w-50" onClick={(e)=>{addToCart(e);navigate();}}>Add To Cart</a>
                         </div>}
                     </div>
                </div>

@@ -172,16 +172,108 @@ function *RemoveOneItem(action){
     console.log(".....", action.dispatch)
     yield put(action.dispatch)
 }
+function *RemoveItem(action){
+    console.log("???",action.indexItem)
+    yield put({
+        type: "REMOVE_CART_ITEM_FETCHING"
+    })
+    let removeCartUrl = "https://apifromashu.herokuapp.com/api/removecakefromcart"
+    let response=yield axios({
+        method: 'post',
+        url: removeCartUrl,
+        headers: {
+            authToken: localStorage.token
+        },
+        data: action.indexItem.cakeDetails1
+    })
+    console.log("Response from remove cart item????????", response)
+    if(response.data.message=="Removed  item from cart"){
+        yield put({
+            type: "REMOVE_CART_ITEM_SUCCESS",
+            payload: response.data.message
+        })
+    }
+    else{
+        yield put({
+            type: "REMOVE_CART_ITEM_FAILURE"
+        })
+    }
+    console.log(".....", action.dispatch)
+    yield put(action.dispatch)
+}
+function *OrderCake(action){
+    console.log("???",action.order)
+    yield put({
+        type: "ORDER_CAKE_FETCHING"
+    })
+    let orderCakeUrl = "https://apifromashu.herokuapp.com/api/addcakeorder"
+    let response=yield axios({
+        method: 'post',
+        url: orderCakeUrl,
+        headers: {
+            authToken: localStorage.token
+        },
+        data: action.order
+    })
+    console.log("Response from order cake????????", response)
+    if(response.data.message=="Removed  item from cart"){
+        yield put({
+            type: "ORDER_CAKE_SUCCESS",
+            payload: response.data.message
+        })
+    }
+    else{
+        yield put({
+            type: "ORDER_CAKE_FAILURE"
+        })
+    }
+}
+function *PastOrdersData(action){
+    console.log("past orders", action)
+    yield put({
+        type: "PAST_ORDER_FETCHING"
+    })
+    let PastCakeOrdersUrl = "https://apifromashu.herokuapp.com/api/cakeorders"
+    let response=yield axios({
+        method: 'post',
+        url: PastCakeOrdersUrl,
+        headers: {
+            authToken: localStorage.token
+        }
+    })
+    console.log("Response from past cake orders????????", response.data.cakeorders)
+    if(response.data.cakeorders){
+        yield put({
+            type: "PAST_ORDER_SUCCESS",
+            payload: response.data.cakeorders
+        })
+    }
+    else{
+        yield put({
+            type: "PAST_ORDER_FAILURE"
+        })
+    }
+}
+function *CakeDetails1(){
+    yield takeEvery("Cake_Details", CakeDetails)
+}
+
 function *CartSaga(){
     console.log("Cart Saga")
-    yield takeEvery("Cake_Details", CakeDetails)
     yield takeEvery("Cart_Details", AddCakeToCart)
     yield takeEvery("Cart_Items", CartGenerator)
     yield takeEvery("Cart_Item", CartItemIndex)
     yield takeEvery("Remove_One_Cart_Item", RemoveOneItem)
+    yield takeEvery("Remove_Cart_Item", RemoveItem)
+}
+function *PurchaseCake(){
+    yield takeEvery("Order_Cake", OrderCake)
+}
+function *PastOrders(){
+    yield takeEvery("Cake_History", PastOrdersData)
 }
 export default function *RootSaga(){
     console.log("root saga")
-    yield all([CartSaga()])
+    yield all([CakeDetails1(),CartSaga(), PurchaseCake(), PastOrders()])
     // console.log(yield all([CartSaga]))
 }

@@ -12,12 +12,14 @@ import Cart from "./Components/Cart";
 import {BrowserRouter, Route, Switch, withRouter} from 'react-router-dom';
 import { Search } from './Components/Search';
 import ForgotPass from './Components/ForgotPass';
+import PurchaseDetails from './Components/PurchaseDetails';
 import { useEffect, useState } from 'react';
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from "react-loader-spinner";
+import PastOrders from './Components/PastOrders';
 
 function App(props) {
   let isUserLoggedIn=false;
@@ -115,6 +117,12 @@ function App(props) {
               <Redirect to="/login"/>
             )
           }/>}
+          {props.isUserLoggedIn && <Route exact path="/pastorders" component={PastOrders}></Route>}
+          {props.isUserLoggedIn==false && <Route path='/pastorders' render={() => 
+            (
+              <Redirect to="/login"/>
+            )
+          }/>}
           {props.isUserLoggedIn && <Route exact path="/forgot-pass" render={
             ()=>(
               <Redirect to="/"/>
@@ -126,6 +134,12 @@ function App(props) {
 
           <Route exact path="/search" component={Search}></Route>
           <Route exact path="/cake/:details" component={CakeDetails}></Route> 
+          {props.isUserLoggedIn && <Route exact path="/purchaseDetails" component={PurchaseDetails}></Route>}
+          {props.isUserLoggedIn==false && <Route path='/purchaseDetails' render={() => 
+            (
+              <Redirect to="/"/>
+            )
+          }/>}
           <Route exact path="**" component={PageNotFound}></Route>
         </Switch>
         {/* {route}
