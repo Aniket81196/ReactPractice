@@ -242,6 +242,58 @@ export let RemoveButtonReducer= function(state={
         default: return state;
     }
 }
+// Add New Cake
+export let AddNewCakeReducer= function(state={
+    dell:19,addToast5:false
+},action){
+    switch(action.type){
+        case "ADD_NEW_CAKE_FETCHING":{
+           state={...state}
+           state["isLoading"]=true 
+           return state
+        }
+        case "ADD_NEW_CAKE_SUCCESS":{
+            state={...state}
+            state["isLoading"]=false
+            state["addnewcake"]=action.payload
+            state["addToast5"]=true
+            return state
+        }
+         case "ADD_NEW_CAKE_FAILURE":{
+            state={...state}
+            state["isLoading"]=false
+            state["addnewcakeerror"]="Some error occurred in add new cake fetch"
+            return state
+        }
+        default: return state;
+    }
+}
+// Upload Cake Image Reducer
+export let UploadImageReducer= function(state={
+    dell:20,addToast6:false
+},action){
+    switch(action.type){
+        case "UPLOAD_IMAGE_FETCHING":{
+           state={...state}
+           state["isLoading"]=true 
+           return state
+        }
+        case "UPLOAD_IMAGE_SUCCESS":{
+            state={...state}
+            state["isLoading"]=false
+            state["uploadimage"]=action.payload
+            state["addToast5"]=true
+            return state
+        }
+         case "UPLOAD_IMAGE_FAILURE":{
+            state={...state}
+            state["isLoading"]=false
+            state["uploadimageerror"]="Some error occurred in upload image fetch"
+            return state
+        }
+        default: return state;
+    }
+}
 export let Reducer1= function(state={
     dell:10
 }, action){

@@ -20,6 +20,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from "react-loader-spinner";
 import PastOrders from './Components/PastOrders';
+import AddCake from './Components/AddCake';
+import FileUpload from './Components/FileUpload';
 
 function App(props) {
   let isUserLoggedIn=false;
@@ -136,6 +138,30 @@ function App(props) {
           <Route exact path="/cake/:details" component={CakeDetails}></Route> 
           {props.isUserLoggedIn && <Route exact path="/purchaseDetails" component={PurchaseDetails}></Route>}
           {props.isUserLoggedIn==false && <Route path='/purchaseDetails' render={() => 
+            (
+              <Redirect to="/"/>
+            )
+          }/>}
+          {/* {props.isUserLoggedIn && <Route exact path="/addcake" component={AddCake}></Route>}
+          {props.isUserLoggedIn==false && <Route path='/addcake' render={() => 
+            (
+              <Redirect to="/"/>
+            )
+          }/>}
+          {props.isUserLoggedIn && <Route exact path="/uploadimage" component={AddCake}></Route>}
+          {props.isUserLoggedIn==false && <Route path='/addcake' render={() => 
+            (
+              <Redirect to="/"/>
+            )
+          }/>} */}
+          {props.isUserLoggedIn && <Route exact path="/uploadimage" component={FileUpload}></Route>}
+          {props.isUserLoggedIn==false && <Route path='/uploadimage' render={() => 
+            (
+              <Redirect to="/"/>
+            )
+          }/>}
+          {props.isUserLoggedIn && <Route exact path="/addcake" component={AddCake}></Route>}
+          {props.isUserLoggedIn==false && <Route path='/addcake' render={() => 
             (
               <Redirect to="/"/>
             )

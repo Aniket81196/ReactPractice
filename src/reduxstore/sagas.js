@@ -254,6 +254,60 @@ function *PastOrdersData(action){
         })
     }
 }
+function *AddNewCake1(action){
+    yield put({
+        type: "ADD_NEW_CAKE_FETCHING"
+    })
+    let NewCakeUrl = "https://apifromashu.herokuapp.com/api/addcake"
+    let response=yield axios({
+        method: 'post',
+        url: NewCakeUrl,
+        headers: {
+            authToken: localStorage.token
+        },
+        data: action.newCake
+    })
+    console.log("Response from new cake????????", response)
+    if(response.data){
+        yield put({
+            type: "ADD_NEW_CAKE_SUCCESS",
+            payload: response.data
+        })
+    }
+    else{
+        yield put({
+            type: "ADD_NEW_CAKE_FAILURE"
+        })
+    }
+}
+function *UploadCakeImage(action){
+    yield put({
+        type: "UPLOAD_IMAGE_FETCHING"
+    })
+    let UploadImageUrl = "https://apifromashu.herokuapp.com/api/upload"
+    let response=yield axios({
+        method: 'post',
+        url: UploadImageUrl,
+        headers: {
+            authToken: localStorage.token
+        },
+        data: action.cakeImage
+    })
+    console.log("Response from upload image????????", response)
+    if(response.data){
+        yield put({
+            type: "UPLOAD_IMAGE_SUCCESS",
+            payload: response.data
+        }) 
+    }
+    else{
+        yield put({
+            type: "UPLOAD_IMAGE_FAILURE"
+        })
+    }
+    // yield put(action.propsHistory)
+}
+
 function *CakeDetails1(){
     yield takeEvery("Cake_Details", CakeDetails)
 }
@@ -272,8 +326,14 @@ function *PurchaseCake(){
 function *PastOrders(){
     yield takeEvery("Cake_History", PastOrdersData)
 }
+function *AddNewCake(){
+    yield takeEvery("ADD_NEW_CAKE", AddNewCake1)
+}
+function *UploadImage(){
+    yield takeEvery("Cake_Image", UploadCakeImage)
+}
 export default function *RootSaga(){
     console.log("root saga")
-    yield all([CakeDetails1(),CartSaga(), PurchaseCake(), PastOrders()])
+    yield all([CakeDetails1(),CartSaga(), PurchaseCake(), PastOrders(),UploadImage(), AddNewCake() ])
     // console.log(yield all([CartSaga]))
 }

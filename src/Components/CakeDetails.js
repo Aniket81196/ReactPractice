@@ -83,7 +83,7 @@ function CakeDetails(props) {
             toast.error("You need to login first")
         }
     }
-    function navigate(){
+    function navigate(e){
         toast.success("Cake added to cart")
         props.history.push("/cart")
     }
@@ -121,7 +121,7 @@ function CakeDetails(props) {
                             <p><label className="font-weight-bold">Weight:-</label> {props.cakeitem.weight}kg</p>
                             <p><label className="font-weight-bold">Flavour:-</label> {props.cakeitem.flavour}</p>
                             <p><label className="font-weight-bold">Occasion:-</label> {props.cakeitem.type}</p>
-                            <a href="#" class="btn btn-primary mt-5 w-50" onClick={(e)=>{addToCart(e);navigate();}}>Add To Cart</a>
+                            <a href="#" class="btn btn-primary mt-5 w-50" onClick={(e)=>{addToCart(e);navigate(e);}}>Add To Cart</a>
                         </div>}
                     </div>
                </div>
